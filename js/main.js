@@ -1,5 +1,5 @@
 var hostname = ''; //Replace with your hostname;
-var authorization = "=" // Your username:password on base64
+var authorization = "" // Your username:password on base64
 var apiEndpoints ={
     post: '/wp-json/wp/v2/posts?filter[posts_per_page]=-1',
     comments: '/wp-json/wp/v2/comments?filter[posts_per_page]=-1',
