@@ -8,8 +8,6 @@
     <style>
         a.more-link {display: none;}
         .comment {margin-left: 10px;}
-        .post {display: none;}
-        #post-1, #excerp-1 {display: none;}
     </style>
     <title>Wordpress REST API using Vue</title>
 
@@ -28,14 +26,8 @@
     <div class="container">
         <div class="row">
             <div id="app">
-                <div id="excerpts" v-show="showExcerpts == true">
-                    <div v-for="post in posts" class="well col-xs-12 col-md-6 col-md-offset-3" v-bind:id="'excerpt=' + post.id">
-                        <h1 v-html="post.title.rendered"></h1>
-                        <p v-html="post.excerpt.rendered"></p>
-                        <button v-on:click="loadPost(post.id)">Read More</button>
-                    </div>
-                </div>
-                <div id="posts">
+                
+                <!--<div id="posts">
                     <div v-for="post in posts" class="well col-xs-12 col-md-12 post" v-bind:id="'post-'+post.id">
                         <h1 v-html="post.title.rendered"></h1>
                         <p>{{post.date}}</p>
@@ -47,8 +39,36 @@
                         </div>
                         <button v-on:click="loadExcerpts()">Back</button>
                     </div>
-                </div>
+                </div>-->
+                <!--<router-link to="/foo">Go to Foo</router-link>
+                <router-link to="/bar">Go to Bar</router-link>-->
+                
+                <router-view></router-view>
             </div>
+            <template id="post-list">
+                <div>
+                    <div v-for="post in posts" class="well col-xs-12 col-md-6 col-md-offset-3">
+                        <h1 v-html="post.title.rendered"></h1>
+                        <p v-html="post.excerpt.rendered"></p>
+                        <router-link :to="{name: 'post', params: {postId: post.id}}">Read More</router-link>
+                    </div>
+                </div>
+            </template>
+
+            <template id="post-item">
+                    <div class="well col-xs-12 col-md-12">
+                        <h1 v-html="title"></h1>
+                        <p>{{date}}</p>
+                        <p v-html="content"></p>
+                        <!--<h4>Comments: </h4>
+                        <div v-for="comment in comments" v-if="comment.post == post.id" class="comment">
+                            <p>{{comment.author_name}} : </p>
+                            <p v-html="comment.content.rendered"></p>
+                        </div>-->
+                        <!--<button v-on:click="loadExcerpts()">Back</button>-->
+                    </div>
+           
+            </template>
         </div>
     </div>
     
