@@ -29,21 +29,21 @@
         <div class="row">
             <div id="app">
                 <div id="excerpts" v-show="showExcerpts == true">
-                    <div v-for="post in posts" class="well col-xs-12 col-md-6 col-md-offset-3" id="excerp-{{post.id}}">
-                        <h1>{{{post.title.rendered}}}</h1>
-                        <p>{{{post.excerpt.rendered}}}</p>
+                    <div v-for="post in posts" class="well col-xs-12 col-md-6 col-md-offset-3" v-bind:id="'excerpt=' + post.id">
+                        <h1 v-html="post.title.rendered"></h1>
+                        <p v-html="post.excerpt.rendered"></p>
                         <button v-on:click="loadPost(post.id)">Read More</button>
                     </div>
                 </div>
                 <div id="posts">
-                    <div v-for="post in posts" class="well col-xs-12 col-md-12 post" id="post-{{post.id}}">
-                        <h1>{{{post.title.rendered}}}</h1>
+                    <div v-for="post in posts" class="well col-xs-12 col-md-12 post" v-bind:id="'post-'+post.id">
+                        <h1 v-html="post.title.rendered"></h1>
                         <p>{{post.date}}</p>
-                        <p>{{{post.content.rendered}}}</p>
+                        <p v-html="post.content.rendered"></p>
                         <h4>Comments: </h4>
                         <div v-for="comment in comments" v-if="comment.post == post.id" class="comment">
                             <p>{{comment.author_name}} : </p>
-                            <p>{{{comment.content.rendered}}}</p>
+                            <p v-html="comment.content.rendered"></p>
                         </div>
                         <button v-on:click="loadExcerpts()">Back</button>
                     </div>
@@ -57,7 +57,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/vue/1.0.22/vue.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/vue/1.0.22/vue.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.6/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

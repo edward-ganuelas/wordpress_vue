@@ -1,4 +1,4 @@
-var hostname = ''; //Replace with your hostname;
+var hostname = '../wordpress'; //Replace with your hostname;
 var authorization = "" // Your username:password on base64
 var apiEndpoints ={
     post: '/wp-json/wp/v2/posts?filter[posts_per_page]=-1',
