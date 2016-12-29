@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <style>
-        a.more-link {display: none;}
+        a.more-link, a.view-article {display: none;}
         .comment {margin-left: 10px;}
     </style>
     <title>Wordpress REST API using Vue</title>
@@ -27,22 +27,6 @@
         <div class="row">
             <div id="app">
                 
-                <!--<div id="posts">
-                    <div v-for="post in posts" class="well col-xs-12 col-md-12 post" v-bind:id="'post-'+post.id">
-                        <h1 v-html="post.title.rendered"></h1>
-                        <p>{{post.date}}</p>
-                        <p v-html="post.content.rendered"></p>
-                        <h4>Comments: </h4>
-                        <div v-for="comment in comments" v-if="comment.post == post.id" class="comment">
-                            <p>{{comment.author_name}} : </p>
-                            <p v-html="comment.content.rendered"></p>
-                        </div>
-                        <button v-on:click="loadExcerpts()">Back</button>
-                    </div>
-                </div>-->
-                <!--<router-link to="/foo">Go to Foo</router-link>
-                <router-link to="/bar">Go to Bar</router-link>-->
-                
                 <router-view></router-view>
             </div>
             <template id="post-list">
@@ -50,7 +34,7 @@
                     <div v-for="post in posts" class="well col-xs-12 col-md-6 col-md-offset-3">
                         <h1 v-html="post.title.rendered"></h1>
                         <p v-html="post.excerpt.rendered"></p>
-                        <router-link :to="{name: 'post', params: {postId: post.id}}">Read More</router-link>
+                        <router-link :to="{path: 'post', query: {postId: post.id}}">Read More</router-link>
                     </div>
                 </div>
             </template>
@@ -60,14 +44,19 @@
                         <h1 v-html="title"></h1>
                         <p>{{date}}</p>
                         <p v-html="content"></p>
-                        <!--<h4>Comments: </h4>
-                        <div v-for="comment in comments" v-if="comment.post == post.id" class="comment">
-                            <p>{{comment.author_name}} : </p>
-                            <p v-html="comment.content.rendered"></p>
-                        </div>-->
-                        <!--<button v-on:click="loadExcerpts()">Back</button>-->
+                        <router-link :to="{path: 'comments', query: {postID: postId}}">Read Comments</router-link>
+                        <router-view></router-view>
                     </div>
            
+            </template>
+            <template id="comment-list">
+                    <div class="well col-xs-12 col-md-12">
+                    <h4>Comments: </h4>
+                        <div v-for="comment in comments" v-if="comment.post == postId" class="comment">
+                            <p>{{comment.author_name}} : </p>
+                            <p v-html="comment.content.rendered"></p>
+                      </div>
+                      </div>
             </template>
         </div>
     </div>
