@@ -42,7 +42,7 @@
                     <div v-for="post in posts" class="well">
                         <h1 v-html="post.title.rendered"></h1>
                         <p v-html="post.excerpt.rendered"></p>
-                        <router-link :to="{path: 'post', query: {postId: post.id}}">Read More</router-link>
+                        <router-link :to="{path: '/post', query: {postId: post.id}}">Read More</router-link>
                     </div>
                 </div>
             </template>

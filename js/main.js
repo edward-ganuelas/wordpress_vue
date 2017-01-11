@@ -19,6 +19,7 @@
             //    console.log(to.path);
             router.forward(to.path);
             
+              
             
             }
         }
@@ -63,7 +64,7 @@
                     var id = this.$route.params.id;
                     urlString = hostname + apiEndpoints[this.apiUrl]+id;
                 }
-                console.log(urlString);
+
                 $.ajax({
                     headers: {
                         "Authorization": "Basic " + authorization
@@ -184,5 +185,29 @@
     var app = new Vue({
         el: "#app",
         router,
+        data: {
+            posts: ''
+        },
+        methods:{
+            test : function(){
+                alert('test');
+            },
+            getPosts(apiUrl){
+                var componentThis = this;
+                var urlString = hostname + apiEndpoints['posts'];
+                if(this.apiUrl !== 'posts'){
+                    var id = this.$route.params.id;
+                    urlString = hostname + apiEndpoints[this.apiUrl]+id;
+                }
+                console.log(urlString);
+                $.ajax({
+                    headers: {
+                        "Authorization": "Basic " + authorization
+                    },
+                    url: urlString
+
+                }).success(function (data) { componentThis.posts = data; })
+            }
+        }
     });
 })();
