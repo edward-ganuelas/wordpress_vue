@@ -4,6 +4,7 @@ Wordpres REST API: http://v2.wp-api.org/
 Wordpress Application Plugin: https://github.com/georgestephanis/application-passwords
 
 npm install
+
 grunt babel
 
 
