@@ -1,131 +1,213 @@
-var hostname = ''; //Replace with your hostname;
-var authorization = "" // Your username:password on base64
-var apiEndpoints = {
-    posts: '/wp-json/wp/v2/posts?filter[posts_per_page]=-1',
-    comments: '/wp-json/wp/v2/comments?filter[posts_per_page]=-1',
-    categories: '/wp-json/wp/v2/categories',
-    post: '/wp-json/wp/v2/posts/'
-}
-const Home = { template: '<post-list />' }
-const Post = { template: '<post-item v-bind:postId="$route.query.postId" />' }
-const Comments = {template: '<comment-list v-bind:postId="$route.query.postID" />'}
-
-const routes = [
-    { path: '/', component: Home },
-    {
-        path: '/post',
-        name: 'post',
-        component: Post
-    },
-    {
-        path: '/comments',
-        name: 'comments',
-        component: Comments
+(function () {
+    var hostname = ''; //Replace with your hostname;
+    var authorization = "" // Your username:password on base64
+    var apiEndpoints = {
+        posts: '/wp-json/wp/v2/posts?filter[posts_per_page]=-1',
+        comments: '/wp-json/wp/v2/comments?filter[posts_per_page]=-1',
+        categories: '/wp-json/wp/v2/categories',
+        post: '/wp-json/wp/v2/posts/',
+        tags: '/wp-json/wp/v2/tags',
+        category: '/wp-json/wp/v2/posts?categories='
     }
-]
+    const Home = { template: '<post-list apiUrl="posts"/>' }
+    const Post = { template: '<post-item v-bind:postId="$route.query.postId" />' }
+    const Comments = { template: '<comment-list v-bind:postId="$route.query.postID" />' }
+    const Categories = {
+        template: '<post-list apiUrl="category" />',
+        watch:{
+            '$route'(to, from){
+            //    console.log(to.path);
+            router.forward(to.path);
+            
+              
+            
+            }
+        }
 
-const router = new VueRouter({
-    routes
-})
+    }
 
-Vue.component('post-list', {
-    template: '#post-list',
-    data: function () {
-        return {
+    const routes = [
+        { path: '/', component: Home },
+        {
+            path: '/post',
+            name: 'post',
+            component: Post
+        },
+        {
+            path: '/comments',
+            name: 'comments',
+            component: Comments
+        },{
+            path: '/post/category/:id',
+            name: 'category',
+            component: Categories
+        }
+    ]
+
+    const router = new VueRouter({
+        routes
+    })
+
+    Vue.component('post-list', {
+        template: '#post-list',
+        props: ['apiUrl'],
+        data: function () {
+            return {
+                posts: ''
+            }
+        },
+        methods: {
+            getPosts: function () {
+                var componentThis = this;
+                var urlString = hostname + apiEndpoints['posts'];
+                if(this.apiUrl !== 'posts'){
+                    var id = this.$route.params.id;
+                    urlString = hostname + apiEndpoints[this.apiUrl]+id;
+                }
+
+                $.ajax({
+                    headers: {
+                        "Authorization": "Basic " + authorization
+                    },
+                    url: urlString
+
+                }).success(function (data) { componentThis.posts = data; })
+            },
+        },
+        mounted: function () {
+            this.getPosts();
+        }
+    })
+
+    Vue.component('post-item', {
+        template: "#post-item",
+        props: ['postId'],
+        data: function () {
+            return {
+                date: '',
+                title: '',
+                content: '',
+                comments: '',
+            }
+        },
+        methods: {
+            getPost: function () {
+                var componentThis = this;
+                $.ajax({
+                    headers: {
+                        "Authorization": "Basic " + authorization
+                    },
+                    url: hostname + apiEndpoints.post + componentThis.postId
+                }).success(function (data) {
+                    componentThis.date = data.date;
+                    componentThis.title = data.title.rendered;
+                    componentThis.content = data.content.rendered;
+                })
+            },
+
+        },
+        mounted: function () {
+            this.getPost();
+        }
+    })
+
+    Vue.component('comment-list', {
+        template: "#comment-list",
+        props: ['postId'],
+        data: function () {
+            return {
+                comments: ''
+            }
+        },
+        methods: {
+            getComments: function () {
+                var componentThis = this;
+                var jsondata = '';
+                $.ajax({
+                    headers: {
+                        "Authorization": "Basic " + authorization
+                    },
+                    url: hostname + apiEndpoints.comments
+                }).success(function (data) { jsondata = data; componentThis.comments = data });
+            },
+        },
+        mounted: function () {
+            this.getComments();
+        }
+    })
+
+    Vue.component('categories-list', {
+        template: "#categories-list",
+        data: function () {
+            return {
+                categories: ''
+            }
+        },
+        methods: {
+            getCategories: function () {
+                var componentThis = this;
+                $.ajax({
+                    headers: {
+                        "Authorization": "Basic " + authorization
+                    },
+                    url: hostname + apiEndpoints.categories
+                }).success(function (data) { componentThis.categories = data });
+            }
+        },
+        mounted: function () {
+            this.getCategories();
+        }
+    })
+
+    Vue.component('tag-list', {
+        template: "#tag-list",
+        data: function () {
+            return {
+                tags: ''
+            }
+        },
+        methods: {
+            getTags: function () {
+                var componentThis = this;
+                $.ajax({
+                    headers: {
+                        "Authorization": "Basic " + authorization
+                    },
+                    url: hostname + apiEndpoints.tags
+                }).success(function (data) { componentThis.tags = data });
+            }
+        },
+        mounted: function () {
+            this.getTags();
+        }
+    })
+
+    var app = new Vue({
+        el: "#app",
+        router,
+        data: {
             posts: ''
+        },
+        methods:{
+            test : function(){
+                alert('test');
+            },
+            getPosts(apiUrl){
+                var componentThis = this;
+                var urlString = hostname + apiEndpoints['posts'];
+                if(this.apiUrl !== 'posts'){
+                    var id = this.$route.params.id;
+                    urlString = hostname + apiEndpoints[this.apiUrl]+id;
+                }
+                console.log(urlString);
+                $.ajax({
+                    headers: {
+                        "Authorization": "Basic " + authorization
+                    },
+                    url: urlString
+
+                }).success(function (data) { componentThis.posts = data; })
+            }
         }
-    },
-    methods: {
-        getPosts: function () {
-            var componentThis = this;
-
-            $.ajax({
-                headers: {
-                    "Authorization": "Basic " + authorization
-                },
-                url: hostname + apiEndpoints.posts
-
-            }).success(function (data) { componentThis.posts = data;})
-        },
-    },
-    mounted: function () {
-        this.getPosts();
-    }
-})
-
-Vue.component('post-item', {
-    template: "#post-item",
-    props: ['postId'],
-    data: function () {
-        return {
-            date: '',
-            title: '',
-            content: '',
-            comments: '',
-        }
-    },
-    methods: {
-        getPost: function() {
-            var componentThis = this;
-            $.ajax({
-                headers: {
-                    "Authorization": "Basic " + authorization
-                },
-                url: hostname + apiEndpoints.post + componentThis.postId
-            }).success(function (data) { 
-                componentThis.date = data.date;
-                componentThis.title = data.title.rendered;
-                componentThis.content = data.content.rendered;
-            })
-        },
-        
-    },
-    mounted: function () {
-        this.getPost();
-    }
-})
-
-Vue.component('comment-list',{
-    template: "#comment-list",
-    props: ['postId'],
-    data: function(){
-        return{
-            comments: ''
-        }
-    },
-    methods: {
-        getComments: function () {
-            var componentThis = this;
-            var jsondata = '';
-            $.ajax({
-                headers: {
-                    "Authorization": "Basic " + authorization
-                },
-                url: hostname + apiEndpoints.comments
-            }).success(function (data) { jsondata = data; componentThis.comments = data});
-        },
-    },
-    mounted: function(){
-        this.getComments();
-    }
-})
-
-var app = new Vue({
-    el: "#app",
-    router,
-    data: {
-        categories: '',
-    },
-    methods: {
-        getCategories: function () {//@TODO
-            $.ajax({
-                headers: {
-                    "Authorization": "Basic " + authorization
-                },
-                url: hostname + apiEndpoints.categories
-            }).success(function (data) { app.categories = data });
-        },
-       
-    },
-})
-
+    });
+})();

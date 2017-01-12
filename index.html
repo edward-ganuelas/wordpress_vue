@@ -26,21 +26,29 @@
     <div class="container">
         <div class="row">
             <div id="app">
+                <router-view class="col-xs-12 col-md-8"></router-view>
+                <div class="col-md-2">
+                    <div class="row">
+                        <categories-list />
+                    </div>
+                    <div class="row">
+                         <tag-list />
+                    </div>
+                </div>
                 
-                <router-view></router-view>
             </div>
             <template id="post-list">
                 <div>
-                    <div v-for="post in posts" class="well col-xs-12 col-md-6 col-md-offset-3">
+                    <div v-for="post in posts" class="well">
                         <h1 v-html="post.title.rendered"></h1>
                         <p v-html="post.excerpt.rendered"></p>
-                        <router-link :to="{path: 'post', query: {postId: post.id}}">Read More</router-link>
+                        <router-link :to="{path: '/post', query: {postId: post.id}}">Read More</router-link>
                     </div>
                 </div>
             </template>
 
             <template id="post-item">
-                    <div class="well col-xs-12 col-md-12">
+                    <div class="well ">
                         <h1 v-html="title"></h1>
                         <p>{{date}}</p>
                         <p v-html="content"></p>
@@ -50,13 +58,30 @@
            
             </template>
             <template id="comment-list">
-                    <div class="well col-xs-12 col-md-12">
+                    <div class="well">
                     <h4>Comments: </h4>
                         <div v-for="comment in comments" v-if="comment.post == postId" class="comment">
                             <p>{{comment.author_name}} : </p>
                             <p v-html="comment.content.rendered"></p>
                       </div>
                       </div>
+            </template>
+
+            <template id="categories-list">
+                <div class="well">
+                    <h4>Categories</h1>
+                        <ul>
+                            <li v-for="category in categories"><router-link :to="{name: 'category', params: {id: category.id}}">{{category.name}}</router-link></li>
+                        </ul>
+                </div>
+            </template>
+
+            <template id="tag-list">
+                <div class="well">
+                    <h4>Tags</h4>
+                        <ul>
+                            <li v-for="tag in tags">{{tag.name}}</li>
+                        </ul>
             </template>
         </div>
     </div>
@@ -69,6 +94,6 @@
     <!--<script src="https://cdn.jsdelivr.net/vue/1.0.22/vue.min.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.6/vue.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
-    <script src="js/main.js"></script>
+    <script src="dist/main.js"></script>
   </body>
 </html>
