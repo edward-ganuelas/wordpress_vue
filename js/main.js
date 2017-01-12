@@ -1,5 +1,5 @@
 (function () {
-    var hostname = 'http://wordpress.eightrayedsun.com'; //Replace with your hostname;
+    var hostname = ''; //Replace with your hostname;
     var authorization = "" // Your username:password on base64
     var apiEndpoints = {
         posts: '/wp-json/wp/v2/posts?filter[posts_per_page]=-1',
