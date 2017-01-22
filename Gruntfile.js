@@ -1,5 +1,6 @@
 module.exports = function(grunt){
 require("load-grunt-tasks")(grunt);
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         "babel": {
@@ -9,17 +10,27 @@ require("load-grunt-tasks")(grunt);
             dist:{
                 files:[
                     {
-                        expand: true,
-                        cwd: "js/",
-                        "src":  "*.js",
-                        "dest": "dist/" 
+                        "dist/main.js": 'js/main.js'
                     }
                 ]
+            }
+        },
+        "concat":{
+            dist:{
+                src: ["node_modules/vue/dist/vue.js", "node_modules/vue-router/dist/vue-router.js", "dist/main.js"],
+                dest: 'dist/main.js'
+            }
+        },
+        "uglify":{
+            my_target:{
+                files:{
+                    "dist/main.min.js":["dist/main.js"]
+                }
             }
         }
 
     });
-
-    grunt.registerTask("default", ["babel"]);
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.registerTask("default", ["babel","concat","uglify"]);
 
 }
