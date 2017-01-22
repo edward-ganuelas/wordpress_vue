@@ -1,7 +1,7 @@
 (function () {
-    var hostname = ''; //Replace with your hostname;
-    var authorization = "" // Your username:password on base64
-    var apiEndpoints = {
+    const hostname = ''; //Replace with your hostname;
+    const authorization = "" // Your username:password on base64
+    const apiEndpoints = {
         posts: '/wp-json/wp/v2/posts?filter[posts_per_page]=-1',
         comments: '/wp-json/wp/v2/comments?filter[posts_per_page]=-1',
         categories: '/wp-json/wp/v2/categories',
@@ -66,10 +66,10 @@
         },
         methods: {
             getPosts: function () {
-                var componentThis = this;
-                var urlString = hostname + apiEndpoints['posts'];
+                let componentThis = this;
+                let urlString = hostname + apiEndpoints['posts'];
                 if(this.apiUrl !== 'posts'){
-                    var id = this.$route.params.id;
+                    let id = this.$route.params.id;
                     urlString = hostname + apiEndpoints[this.apiUrl]+id;
                 }
 
@@ -110,7 +110,7 @@
         },
         methods: {
             getPost: function () {
-                var componentThis = this;
+                let componentThis = this;
                 $.ajax({
                     headers: {
                         "Authorization": "Basic " + authorization
@@ -149,8 +149,8 @@
         },
         methods: {
             getComments: function () {
-                var componentThis = this;
-                var jsondata = '';
+                let componentThis = this;
+                let jsondata = '';
                 $.ajax({
                     headers: {
                         "Authorization": "Basic " + authorization
@@ -180,7 +180,7 @@
         },
         methods: {
             getCategories: function () {
-                var componentThis = this;
+                let componentThis = this;
                 $.ajax({
                     headers: {
                         "Authorization": "Basic " + authorization
@@ -231,14 +231,11 @@
             posts: ''
         },
         methods:{
-            test : function(){
-                alert('test');
-            },
             getPosts(apiUrl){
-                var componentThis = this;
-                var urlString = hostname + apiEndpoints['posts'];
+                let componentThis = this;
+                let urlString = hostname + apiEndpoints['posts'];
                 if(this.apiUrl !== 'posts'){
-                    var id = this.$route.params.id;
+                    let id = this.$route.params.id;
                     urlString = hostname + apiEndpoints[this.apiUrl]+id;
                 }
                 console.log(urlString);

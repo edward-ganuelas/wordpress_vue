@@ -12,6 +12,7 @@ run grunt
 ##TODO
 * Watch Categories without page reload  
 * Tags  
+* Search  
 * Login, Ouath Authentication  
 * Posting comments  
 * Switch to Webpack  
