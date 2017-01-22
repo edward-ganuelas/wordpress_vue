@@ -1,5 +1,5 @@
 (function () {
-    var hostname = ''; //Replace with your hostname;
+    var hostname = 'http://wordpress.eightrayedsun.com'; //Replace with your hostname;
     var authorization = "" // Your username:password on base64
     var apiEndpoints = {
         posts: '/wp-json/wp/v2/posts?filter[posts_per_page]=-1',
@@ -49,7 +49,15 @@
     })
 
     Vue.component('post-list', {
-        template: '#post-list',
+        template: `
+                <div class="col-xs-12 col-md-8">
+                    <div v-for="post in posts" class="well">
+                        <h1 v-html="post.title.rendered"></h1>
+                        <p v-html="post.excerpt.rendered"></p>
+                        <router-link :to="{path: '/post', query: {postId: post.id}}">Read More</router-link>
+                    </div>
+                </div>
+            `,
         props: ['apiUrl'],
         data: function () {
             return {
@@ -80,7 +88,17 @@
     })
 
     Vue.component('post-item', {
-        template: "#post-item",
+        template: `
+                <div class="col-xs-12 col-md-8">
+                    <div class="well">
+                        <h1 v-html="title"></h1>
+                        <p>{{date}}</p>
+                        <p v-html="content"></p>
+                        <router-link :to="{path: 'comments', query: {postID: postId}}">Read Comments</router-link>
+                        <router-view></router-view>
+                    </div>
+                </div>
+            `,
         props: ['postId'],
         data: function () {
             return {
@@ -112,7 +130,17 @@
     })
 
     Vue.component('comment-list', {
-        template: "#comment-list",
+        template: `
+                <div class="col-xs-12 col-md-8">
+                    <div class="well">
+                    <h4>Comments: </h4>
+                        <div v-for="comment in comments" v-if="comment.post == postId" class="comment">
+                            <p>{{comment.author_name}} : </p>
+                            <p v-html="comment.content.rendered"></p>
+                      </div>
+                    </div>
+                </div>
+        `,
         props: ['postId'],
         data: function () {
             return {
@@ -137,7 +165,14 @@
     })
 
     Vue.component('categories-list', {
-        template: "#categories-list",
+        template: `
+                <div class="well">
+                    <h4>Categories</h1>
+                        <ul>
+                            <li v-for="category in categories"><router-link :to="{name: 'category', params: {id: category.id}}">{{category.name}}</router-link></li>
+                        </ul>
+                </div>
+        `,
         data: function () {
             return {
                 categories: ''
@@ -160,7 +195,14 @@
     })
 
     Vue.component('tag-list', {
-        template: "#tag-list",
+        template: `
+                <div class="well">
+                    <h4>Tags</h4>
+                        <ul>
+                            <li v-for="tag in tags">{{tag.name}}</li>
+                        </ul>
+                </div>
+        `,
         data: function () {
             return {
                 tags: ''

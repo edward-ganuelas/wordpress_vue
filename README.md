@@ -4,7 +4,7 @@ Wordpres REST API: http://v2.wp-api.org/
 Wordpress Application Plugin: https://github.com/georgestephanis/application-passwords
 
 run npm install    
-add your wordpress hostname to main.js  
+add your wordpress hostname to js/main.js  
 run grunt 
 
 #TODO
