@@ -167,7 +167,7 @@
     Vue.component('categories-list', {
         template: `
                 <div class="well">
-                    <h4>Categories</h1>
+                    <h4>Categories</h4>
                         <ul>
                             <li v-for="category in categories"><router-link :to="{name: 'category', params: {id: category.id}}">{{category.name}}</router-link></li>
                         </ul>
