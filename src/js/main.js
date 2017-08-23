@@ -1,4 +1,9 @@
+import "babel-polyfill";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+
 (function () {
+    Vue.use(VueRouter);
     const hostname = ''; //Replace with your hostname;
     const authorization = "" // Your username:password on base64
     const apiEndpoints = {
