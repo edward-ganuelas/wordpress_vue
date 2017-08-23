@@ -1,4 +1,4 @@
-#Wordpress Vue Demo  
+# Wordpress Vue Demo  
 
 Vue.js app using the Wordpress REST API plugin (v2) to render you blog posts.  
 
@@ -9,7 +9,7 @@ run npm install
 add your wordpress hostname to js/main.js  
 run npm start
 
-##TODO
+## TODO
 * Watch Categories without page reload  
 * Tags  
 * Search  
