@@ -7,7 +7,7 @@ Wordpress Application Plugin: https://github.com/georgestephanis/application-pas
 
 run npm install    
 add your wordpress hostname to js/main.js  
-run grunt 
+run npm start
 
 ##TODO
 * Watch Categories without page reload  
@@ -15,6 +15,6 @@ run grunt
 * Search  
 * Login, Ouath Authentication  
 * Posting comments  
-* Switch to Webpack  
+~~* Switch to Webpack  ~~
 
 
