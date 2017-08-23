@@ -15,6 +15,6 @@ run npm start
 * Search  
 * Login, Ouath Authentication  
 * Posting comments  
-~~* Switch to Webpack  ~~
+~~* Switch to Webpack~~
 
 
