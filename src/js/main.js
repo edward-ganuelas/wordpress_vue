@@ -1,19 +1,10 @@
-require('dotenv').config();
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import {HOSTNAME, AUTHORIZATION, APIENDPOINTS} from './const/urls';
+
 
 (function () {
     Vue.use(VueRouter);
-    const hostname = ''; //Replace with your hostname;
-    const authorization = "" // Your username:password on base64
-    const apiEndpoints = {
-        posts: '/wp-json/wp/v2/posts?filter[posts_per_page]=-1',
-        comments: '/wp-json/wp/v2/comments?filter[posts_per_page]=-1',
-        categories: '/wp-json/wp/v2/categories',
-        post: '/wp-json/wp/v2/posts/',
-        tags: '/wp-json/wp/v2/tags',
-        category: '/wp-json/wp/v2/posts?categories='
-    }
     const Home = { template: '<post-list apiUrl="posts"/>' }
     const Post = { template: '<post-item v-bind:postId="$route.query.postId" />' }
     const Comments = { template: '<comment-list v-bind:postId="$route.query.postID" />' }
@@ -72,15 +63,15 @@ import VueRouter from 'vue-router';
         methods: {
             getPosts: function () {
                 let componentThis = this;
-                let urlString = hostname + apiEndpoints['posts'];
+                let urlString = HOSTNAME + APIENDPOINTS['POSTS'];
                 if(this.apiUrl !== 'posts'){
                     let id = this.$route.params.id;
-                    urlString = hostname + apiEndpoints[this.apiUrl]+id;
+                    urlString = HOSTNAME + APIENDPOINTS[this.apiUrl]+id;
                 }
 
                 $.ajax({
                     headers: {
-                        "Authorization": "Basic " + authorization
+                        "Authorization": "Basic " + AUTHORIZATION
                     },
                     url: urlString
 
@@ -118,9 +109,9 @@ import VueRouter from 'vue-router';
                 let componentThis = this;
                 $.ajax({
                     headers: {
-                        "Authorization": "Basic " + authorization
+                        "Authorization": "Basic " + AUTHORIZATION
                     },
-                    url: hostname + apiEndpoints.post + componentThis.postId
+                    url: HOSTNAME + APIENDPOINTS.post + componentThis.postId
                 }).success(function (data) {
                     componentThis.date = data.date;
                     componentThis.title = data.title.rendered;
@@ -158,9 +149,9 @@ import VueRouter from 'vue-router';
                 let jsondata = '';
                 $.ajax({
                     headers: {
-                        "Authorization": "Basic " + authorization
+                        "Authorization": "Basic " + AUTHORIZATION
                     },
-                    url: hostname + apiEndpoints.comments
+                    url: HOSTNAME + APIENDPOINTS.COMMENTS
                 }).success(function (data) { jsondata = data; componentThis.comments = data });
             },
         },
@@ -188,9 +179,9 @@ import VueRouter from 'vue-router';
                 let componentThis = this;
                 $.ajax({
                     headers: {
-                        "Authorization": "Basic " + authorization
+                        "Authorization": "Basic " + AUTHORIZATION
                     },
-                    url: hostname + apiEndpoints.categories
+                    url: HOSTNAME + APIENDPOINTS.CATEGORIES
                 }).success(function (data) { componentThis.categories = data });
             }
         },
@@ -218,9 +209,9 @@ import VueRouter from 'vue-router';
                 var componentThis = this;
                 $.ajax({
                     headers: {
-                        "Authorization": "Basic " + authorization
+                        "Authorization": "Basic " + AUTHORIZATION
                     },
-                    url: hostname + apiEndpoints.tags
+                    url: HOSTNAME + APIENDPOINTS.TAGS
                 }).success(function (data) { componentThis.tags = data });
             }
         },
@@ -238,15 +229,15 @@ import VueRouter from 'vue-router';
         methods:{
             getPosts(apiUrl){
                 let componentThis = this;
-                let urlString = hostname + apiEndpoints['posts'];
+                let urlString = HOSTNAME + APIENDPOINTS['POSTS'];
                 if(this.apiUrl !== 'posts'){
                     let id = this.$route.params.id;
-                    urlString = hostname + apiEndpoints[this.apiUrl]+id;
+                    urlString = HOSTNAME + APIENDPOINTS[this.apiUrl]+id;
                 }
                 console.log(urlString);
                 $.ajax({
                     headers: {
-                        "Authorization": "Basic " + authorization
+                        "Authorization": "Basic " + AUTHORIZATION
                     },
                     url: urlString
 
