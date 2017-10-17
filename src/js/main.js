@@ -1,11 +1,12 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router';
+import App from './components/App.vue';
+import router from './router';
 import {HOSTNAME, AUTHORIZATION, APIENDPOINTS} from './const/urls';
 
 
 (function () {
-    Vue.use(VueRouter);
-    const Home = { template: '<post-list apiUrl="posts"/>' }
+    // Vue.use(VueRouter);
+    const Home = { template: '' }
     const Post = { template: '<post-item v-bind:postId="$route.query.postId" />' }
     const Comments = { template: '<comment-list v-bind:postId="$route.query.postID" />' }
     const Categories = {
@@ -14,74 +15,11 @@ import {HOSTNAME, AUTHORIZATION, APIENDPOINTS} from './const/urls';
             '$route'(to, from){
             //    console.log(to.path);
             router.forward(to.path);
-            
-              
-            
+
             }
         }
 
     }
-
-    const routes = [
-        { path: '/', component: Home },
-        {
-            path: '/post',
-            name: 'post',
-            component: Post
-        },
-        {
-            path: '/comments',
-            name: 'comments',
-            component: Comments
-        },{
-            path: '/post/category/:id',
-            name: 'category',
-            component: Categories
-        }
-    ]
-
-    const router = new VueRouter({
-        routes
-    })
-
-    Vue.component('post-list', {
-        template: `
-                <div class="col-xs-12 col-md-8">
-                    <div v-for="post in posts" class="well">
-                        <h1 v-html="post.title.rendered"></h1>
-                        <p v-html="post.excerpt.rendered"></p>
-                        <router-link :to="{path: '/post', query: {postId: post.id}}">Read More</router-link>
-                    </div>
-                </div>
-            `,
-        props: ['apiUrl'],
-        data: function () {
-            return {
-                posts: ''
-            }
-        },
-        methods: {
-            getPosts: function () {
-                let componentThis = this;
-                let urlString = HOSTNAME + APIENDPOINTS['POSTS'];
-                if(this.apiUrl !== 'posts'){
-                    let id = this.$route.params.id;
-                    urlString = HOSTNAME + APIENDPOINTS[this.apiUrl]+id;
-                }
-
-                $.ajax({
-                    headers: {
-                        "Authorization": "Basic " + AUTHORIZATION
-                    },
-                    url: urlString
-
-                }).success(function (data) { componentThis.posts = data; })
-            },
-        },
-        mounted: function () {
-            this.getPosts();
-        }
-    })
 
     Vue.component('post-item', {
         template: `
@@ -243,6 +181,8 @@ import {HOSTNAME, AUTHORIZATION, APIENDPOINTS} from './const/urls';
 
                 }).success(function (data) { componentThis.posts = data; })
             }
-        }
+        },
+        template: '<App />',
+        components: {App}
     });
 })();
