@@ -1,4 +1,4 @@
-import "babel-polyfill";
+require('dotenv').config();
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
