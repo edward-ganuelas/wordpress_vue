@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '../components/Home.vue'
-import Post from '../components/Post.vue'
+import Home from '../components/Home.vue';
+import Post from '../components/Post.vue';
+import Comments from '../components/Comments.vue';
 
 Vue.use(Router);
 
@@ -12,12 +13,13 @@ export default new Router({
             path: '/post',
             name: 'post',
             component: Post
-        }
+        },
+        {
+            path: '/comments',
+            name: 'comments',
+            component: Comments
+        },
         // {
-        //     path: '/comments',
-        //     name: 'comments',
-        //     component: Comments
-        // },{
         //     path: '/post/category/:id',
         //     name: 'category',
         //     component: Categories

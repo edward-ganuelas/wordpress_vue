@@ -6,8 +6,7 @@ import {HOSTNAME, AUTHORIZATION, APIENDPOINTS} from './const/urls';
 
 (function () {
     // Vue.use(VueRouter);
-    
-    const Comments = { template: '<comment-list v-bind:postId="$route.query.postID" />' }
+
     const Categories = {
         template: '<post-list apiUrl="category" />',
         watch:{
@@ -22,37 +21,9 @@ import {HOSTNAME, AUTHORIZATION, APIENDPOINTS} from './const/urls';
 
     Vue.component('comment-list', {
         template: `
-                <div class="col-xs-12 col-md-8">
-                    <div class="well">
-                    <h4>Comments: </h4>
-                        <div v-for="comment in comments" v-if="comment.post == postId" class="comment">
-                            <p>{{comment.author_name}} : </p>
-                            <p v-html="comment.content.rendered"></p>
-                      </div>
-                    </div>
-                </div>
+                
         `,
-        props: ['postId'],
-        data: function () {
-            return {
-                comments: ''
-            }
-        },
-        methods: {
-            getComments: function () {
-                let componentThis = this;
-                let jsondata = '';
-                $.ajax({
-                    headers: {
-                        "Authorization": "Basic " + AUTHORIZATION
-                    },
-                    url: HOSTNAME + APIENDPOINTS.COMMENTS
-                }).success(function (data) { jsondata = data; componentThis.comments = data });
-            },
-        },
-        mounted: function () {
-            this.getComments();
-        }
+        
     })
 
     Vue.component('categories-list', {
