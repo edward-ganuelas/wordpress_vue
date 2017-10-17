@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { HOSTNAME, AUTHORIZATION, APIENDPOINTS } from '../const/urls';
 export default {
     name: 'categories-list',
@@ -20,13 +21,21 @@ export default {
     },
     methods: {
         getCategories: function() {
-            let componentThis = this;
-            $.ajax({
-                headers: {
-                    "Authorization": "Basic " + AUTHORIZATION
-                },
-                url: HOSTNAME + APIENDPOINTS.CATEGORIES
-            }).success(function(data) { componentThis.categories = data });
+            // let componentThis = this;
+            // $.ajax({
+            //     headers: {
+            //         "Authorization": "Basic " + AUTHORIZATION
+            //     },
+            //     url: HOSTNAME + APIENDPOINTS.CATEGORIES
+            // }).success(function(data) { componentThis.categories = data });
+            axios({
+                method: 'get',
+                url: HOSTNAME + APIENDPOINTS.CATEGORIES,
+                auth: {
+                    username: '',
+                    password: ''
+                }
+            }).then(message => this.categories = message.data);
         }
     },
     mounted: function() {

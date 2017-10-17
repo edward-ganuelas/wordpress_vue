@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { HOSTNAME, AUTHORIZATION, APIENDPOINTS } from '../const/urls';
 export default {
     name: 'post-list',
@@ -20,20 +21,22 @@ export default {
     },
     methods: {
         getPosts: function() {
-            let componentThis = this;
+
             let urlString = HOSTNAME + APIENDPOINTS['POSTS'];
             if (this.apiUrl !== 'posts') {
                 let id = this.$route.params.id;
                 urlString = HOSTNAME + APIENDPOINTS[this.apiUrl] + id;
             }
 
-            $.ajax({
-                headers: {
-                    "Authorization": "Basic " + AUTHORIZATION
-                },
-                url: urlString
+            axios({
+                method: 'get',
+                url: urlString,
+                auth: {
+                    username: '',
+                    password: ''
+                }
+            }).then(message => this.posts = message.data);
 
-            }).success(function(data) { componentThis.posts = data; })
         },
     },
     beforeMount: function() {
