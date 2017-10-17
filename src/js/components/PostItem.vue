@@ -12,38 +12,42 @@
 
 
 <script>
-    import { HOSTNAME, AUTHORIZATION, APIENDPOINTS } from '../const/urls';
-    export default{
-        name: 'post-list',
-        props: ['postId'],
-        data: function(){
-            return {
-                date: '',
-                title: '',
-                content: '',
-                comments: '',
-            }
-        },
-        methods: {
-            getPost: function () {
-                let componentThis = this;
-                $.ajax({
-                    headers: {
-                        "Authorization": "Basic " + AUTHORIZATION
-                    },
-                    url: HOSTNAME + APIENDPOINTS.POST + componentThis.postId
-                }).success(function (data) {
-                    componentThis.date = data.date;
-                    componentThis.title = data.title.rendered;
-                    componentThis.content = data.content.rendered;
-                })
-            },
+import axios from 'axios';
+import { HOSTNAME, AUTHORIZATION, APIENDPOINTS } from '../const/urls';
+export default {
+    name: 'post-list',
+    props: ['postId'],
+    data: function() {
+        return {
+            date: '',
+            title: '',
+            content: '',
+            comments: '',
+        }
+    },
+    methods: {
+        getPost: function() {
+
+            axios({
+                method: 'get',
+                url: HOSTNAME + APIENDPOINTS.POST + this.postId,
+                auth: {
+                    username: '',
+                    password: ''
+                }
+            }).then(message => {
+                this.date = message.data.date;
+                this.title = message.data.title.rendered;
+                this.content = message.data.content.rendered;
+            })
 
         },
-        beforeMount: function () {
-            this.getPost();
-        }
+
+    },
+    beforeMount: function() {
+        this.getPost();
     }
+}
 
 </script>
 

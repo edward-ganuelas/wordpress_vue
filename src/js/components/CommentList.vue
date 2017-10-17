@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { HOSTNAME, AUTHORIZATION, APIENDPOINTS } from '../const/urls';
 export default {
     name: 'comment-list',
@@ -22,14 +23,15 @@ export default {
     },
     methods: {
         getComments: function() {
-            let componentThis = this;
-            let jsondata = '';
-            $.ajax({
-                headers: {
-                    "Authorization": "Basic " + AUTHORIZATION
-                },
-                url: HOSTNAME + APIENDPOINTS.COMMENTS
-            }).success(function(data) { jsondata = data; componentThis.comments = data });
+
+            axios({
+                method: 'get',
+                url: HOSTNAME + APIENDPOINTS.COMMENTS,
+                auth: {
+                    username: '',
+                    password: ''
+                }
+            }).success(message => this.comments = message.data);
         },
     },
     beforeMount: function() {
