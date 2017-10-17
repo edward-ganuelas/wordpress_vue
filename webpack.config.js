@@ -1,8 +1,7 @@
 const path = require('path');
-const webpack = require('webpack');
 
 module.exports = {
-    entry: ['babel-polyfill', './src/js/main.js'],
+    entry: ['./src/js/main.js'],
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
@@ -16,13 +15,9 @@ module.exports = {
     devServer: {
         contentBase: './dist'
     },
-    module: {
+    module:{
         rules: [
-            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
-            { test: /\.vue$/, loader: 'vue-loader' }
-        ]
-    },
-    node: {
-        fs: 'empty'
+            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+          ]
     }
 }
