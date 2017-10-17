@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { HOSTNAME, AUTHORIZATION, APIENDPOINTS } from '../const/urls';
 export default {
     name: 'tag-list',
@@ -18,13 +19,15 @@ export default {
     },
     methods: {
         getTags: function() {
-            var componentThis = this;
-            $.ajax({
-                headers: {
-                    "Authorization": "Basic " + AUTHORIZATION
-                },
-                url: HOSTNAME + APIENDPOINTS.TAGS
-            }).success(function(data) { componentThis.tags = data });
+
+            axios({
+                method: 'get',
+                url: HOSTNAME + APIENDPOINTS['TAGS'],
+                auth: {
+                    username: '',
+                    password: ''
+                }
+            }).then(message => this.tags = message.data);
         }
     },
     beforeMount: function() {
