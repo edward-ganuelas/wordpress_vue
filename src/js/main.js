@@ -6,8 +6,7 @@ import {HOSTNAME, AUTHORIZATION, APIENDPOINTS} from './const/urls';
 
 (function () {
     // Vue.use(VueRouter);
-    const Home = { template: '' }
-    const Post = { template: '<post-item v-bind:postId="$route.query.postId" />' }
+    
     const Comments = { template: '<comment-list v-bind:postId="$route.query.postID" />' }
     const Categories = {
         template: '<post-list apiUrl="category" />',
@@ -20,48 +19,6 @@ import {HOSTNAME, AUTHORIZATION, APIENDPOINTS} from './const/urls';
         }
 
     }
-
-    Vue.component('post-item', {
-        template: `
-                <div class="col-xs-12 col-md-8">
-                    <div class="well">
-                        <h1 v-html="title"></h1>
-                        <p>{{date}}</p>
-                        <p v-html="content"></p>
-                        <router-link :to="{path: 'comments', query: {postID: postId}}">Read Comments</router-link>
-                        <router-view></router-view>
-                    </div>
-                </div>
-            `,
-        props: ['postId'],
-        data: function () {
-            return {
-                date: '',
-                title: '',
-                content: '',
-                comments: '',
-            }
-        },
-        methods: {
-            getPost: function () {
-                let componentThis = this;
-                $.ajax({
-                    headers: {
-                        "Authorization": "Basic " + AUTHORIZATION
-                    },
-                    url: HOSTNAME + APIENDPOINTS.post + componentThis.postId
-                }).success(function (data) {
-                    componentThis.date = data.date;
-                    componentThis.title = data.title.rendered;
-                    componentThis.content = data.content.rendered;
-                })
-            },
-
-        },
-        mounted: function () {
-            this.getPost();
-        }
-    })
 
     Vue.component('comment-list', {
         template: `
