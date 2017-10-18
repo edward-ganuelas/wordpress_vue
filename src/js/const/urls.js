@@ -4,10 +4,10 @@ export const AUTHORIZATION = {
     PASSWORD: ''
 }
 export const APIENDPOINTS = {
-    POSTS: '/wp-json/wp/v2/posts?filter[posts_per_page]=-1',
-    COMMENTS: '/wp-json/wp/v2/comments?filter[posts_per_page]=-1',
+    POSTS: '/wp-json/wp/v2/posts?per_page=100',
+    COMMENTS: '/wp-json/wp/v2/comments?per_page=100',
     CATEGORIES: '/wp-json/wp/v2/categories',
     POST: '/wp-json/wp/v2/posts/',
     TAGS: '/wp-json/wp/v2/tags',
-    CATEGORY: '/wp-json/wp/v2/posts?categories='
+    CATEGORY: '/wp-json/wp/v2/posts?per_page=100&categories='
 }
