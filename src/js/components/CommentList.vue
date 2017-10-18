@@ -31,7 +31,7 @@ export default {
                     username: '',
                     password: ''
                 }
-            }).success(message => this.comments = message.data);
+            }).then(message => this.comments = message.data);
         },
     },
     beforeMount: function() {

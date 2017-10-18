@@ -16,28 +16,34 @@ export default {
     props: ['apiUrl'],
     data: function() {
         return {
-            posts: ''
+            posts: '',
+            postID: ''
         }
     },
     methods: {
         getPosts: function() {
-
             let urlString = HOSTNAME + APIENDPOINTS['POSTS'];
-            if (this.apiUrl !== 'posts') {
-                let id = this.$route.params.id;
-                urlString = HOSTNAME + APIENDPOINTS[this.apiUrl] + id;
+
+            if (this.apiUrl !== 'POSTS') {
+                this.postID = this.$route.params.id;
+                urlString = HOSTNAME + APIENDPOINTS[this.apiUrl] + this.postID;
             }
 
             axios({
                 method: 'get',
                 url: urlString,
                 auth: {
-                    username: '',
-                    password: ''
+                    username: AUTHORIZATION.USERNAME,
+                    password: AUTHORIZATION.PASSWORD
                 }
             }).then(message => this.posts = message.data);
 
         },
+    },
+    watch: {
+       '$route'(to, from){
+           this.getPosts();
+        }
     },
     beforeMount: function() {
         this.getPosts();
