@@ -25,8 +25,8 @@ export default {
                 method: 'get',
                 url: HOSTNAME + APIENDPOINTS.CATEGORIES,
                 auth: {
-                    username: '',
-                    password: ''
+                    username: AUTHORIZATION.USERNAME,
+                    password: AUTHORIZATION.PASSWORD
                 }
             }).then(message => this.categories = message.data);
         }

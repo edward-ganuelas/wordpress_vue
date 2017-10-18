@@ -28,8 +28,8 @@ export default {
                 method: 'get',
                 url: HOSTNAME + APIENDPOINTS.COMMENTS,
                 auth: {
-                    username: '',
-                    password: ''
+                    username: AUTHORIZATION.USERNAME,
+                    password: AUTHORIZATION.PASSWORD
                 }
             }).then(message => this.comments = message.data);
         },
