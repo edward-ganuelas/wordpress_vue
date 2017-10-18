@@ -14,7 +14,7 @@ Add your hostname, username and password
 run npm start
 
 ## TODO
-* Watch Categories without page reload  
+~~* Watch Categories without page reload~~
 * Tags  
 * Search  
 * Login, Ouath Authentication  

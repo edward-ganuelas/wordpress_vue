@@ -1,6 +1,6 @@
 {
   "name": "wordpress_vue",
-  "version": "1.5.2",
+  "version": "1.5.5",
   "description": "Vue SPA App Hooking into a Wordpress REST API",
   "main": "index.js",
   "scripts": {
