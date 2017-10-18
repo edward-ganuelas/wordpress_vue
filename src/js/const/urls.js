@@ -1,7 +1,7 @@
-export const HOSTNAME = 'https://wordpress.eightrayedsun.com'; //Replace with your hostname;
+export const HOSTNAME = process.env.HOSTNAME; 
 export const AUTHORIZATION = {
-    USERNAME: '',
-    PASSWORD: ''
+    USERNAME: process.env.USERNAME,
+    PASSWORD: process.env.PASSWORD
 }
 export const APIENDPOINTS = {
     POSTS: '/wp-json/wp/v2/posts?per_page=100',
