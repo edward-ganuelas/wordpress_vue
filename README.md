@@ -3,14 +3,18 @@
 Vue.js app using the Wordpress REST API plugin (v2) to render you blog posts.  
 
 Wordpres REST API: http://v2.wp-api.org/  
+
 Wordpress Application Plugin: https://github.com/georgestephanis/application-passwords   
 
 run npm install    
-add your wordpress hostname to js/main.js  
+
+Copy .env.example to .env
+
+Add your hostname, username and password
 run npm start
 
 ## TODO
-* Watch Categories without page reload  
+~~* Watch Categories without page reload~~
 * Tags  
 * Search  
 * Login, Ouath Authentication  

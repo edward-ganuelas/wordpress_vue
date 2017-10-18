@@ -24,8 +24,8 @@ export default {
                 method: 'get',
                 url: HOSTNAME + APIENDPOINTS['TAGS'],
                 auth: {
-                    username: '',
-                    password: ''
+                    username: AUTHORIZATION.USERNAME,
+                    password: AUTHORIZATION.PASSWORD
                 }
             }).then(message => this.tags = message.data);
         }

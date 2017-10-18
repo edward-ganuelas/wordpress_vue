@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     entry: ['babel-polyfill', './src/js/main.js'],
@@ -24,5 +25,11 @@ module.exports = {
     },
     node: {
         fs: 'empty'
-    }
+    },
+    plugins:[
+        new Dotenv({
+            path: './.env',
+            safe: false
+        })
+    ]
 }

@@ -2,7 +2,7 @@
     <div class="well">
         <h4>Categories</h4>
         <ul>
-            <li v-for="category in categories" v-bind:key="category.id">
+            <li v-for="category in categories" v-bind:key="category.id ">
                 <router-link :to="{name: 'category', params: {id: category.id}}">{{category.name}}</router-link>
             </li>
         </ul>
@@ -21,24 +21,17 @@ export default {
     },
     methods: {
         getCategories: function() {
-            // let componentThis = this;
-            // $.ajax({
-            //     headers: {
-            //         "Authorization": "Basic " + AUTHORIZATION
-            //     },
-            //     url: HOSTNAME + APIENDPOINTS.CATEGORIES
-            // }).success(function(data) { componentThis.categories = data });
             axios({
                 method: 'get',
                 url: HOSTNAME + APIENDPOINTS.CATEGORIES,
                 auth: {
-                    username: '',
-                    password: ''
+                    username: AUTHORIZATION.USERNAME,
+                    password: AUTHORIZATION.PASSWORD
                 }
             }).then(message => this.categories = message.data);
         }
     },
-    mounted: function() {
+    beforeMount: function() {
         this.getCategories();
     }
 }

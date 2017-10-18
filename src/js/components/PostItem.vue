@@ -32,8 +32,8 @@ export default {
                 method: 'get',
                 url: HOSTNAME + APIENDPOINTS.POST + this.postId,
                 auth: {
-                    username: '',
-                    password: ''
+                    username: AUTHORIZATION.USERNAME,
+                    password: AUTHORIZATION.PASSWORD
                 }
             }).then(message => {
                 this.date = message.data.date;
